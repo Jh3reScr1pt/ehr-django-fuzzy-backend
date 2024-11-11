@@ -1,0 +1,110 @@
+[
+  {
+    "model": "diagnoses.diseasegroup",
+    "pk": 1,
+    "fields": {
+      "name": "Infecciones Respiratorias Agudas"
+    }
+  },
+  {
+    "model": "diagnoses.diseasegroup",
+    "pk": 2,
+    "fields": {
+      "name": "Enfermedades Gastrointestinales"
+    }
+  },
+  {
+    "model": "diagnoses.disease",
+    "pk": 1,
+    "fields": {
+      "name": "Resfriado Común",
+      "cie_code": "J00"
+    }
+  },
+  {
+    "model": "diagnoses.disease",
+    "pk": 2,
+    "fields": {
+      "name": "Neumonía No Grave",
+      "cie_code": "J18"
+    }
+  },
+  {
+    "model": "diagnoses.disease",
+    "pk": 3,
+    "fields": {
+      "name": "Diarrea y Gastroenteritis de Origen Infeccioso",
+      "cie_code": "A09"
+    }
+  },
+  {
+    "model": "diagnoses.symptom",
+    "pk": 1,
+    "fields": {
+      "name": "Congestión nasal"
+    }
+  },
+  {
+    "model": "diagnoses.symptom",
+    "pk": 2,
+    "fields": {
+      "name": "Dolor de garganta"
+    }
+  },
+  {
+    "model": "diagnoses.symptom",
+    "pk": 3,
+    "fields": {
+      "name": "Estornudos"
+    }
+  },
+  {
+    "model": "diagnoses.groupsymptom",
+    "pk": 1,
+    "fields": {
+      "disease_group": 1,
+      "symptom": 1,
+      "severity_level": 2
+    }
+  },
+  {
+    "model": "diagnoses.groupsymptom",
+    "pk": 2,
+    "fields": {
+      "disease_group": 1,
+      "symptom": 2,
+      "severity_level": 3
+    }
+  },
+  {
+    "model": "diagnoses.groupsymptom",
+    "pk": 3,
+    "fields": {
+      "disease_group": 2,
+      "symptom": 3,
+      "severity_level": 1
+    }
+  },
+  {
+    "model": "diagnoses.diseasegroup",
+    "pk": 3,
+    "fields": {
+      "name": "Enfermedades Infecciosas y Parasitarias"
+    }
+  },
+  {
+    "model": "diagnoses.diseasegroup",
+    "pk": 4,
+    "fields": {
+      "name": "Enfermedades del Sistema Nervioso"
+    }
+  },
+  {
+    "model": "diagnoses.disease",
+    "pk": 4,
+    "fields": {
+      "name": "Migraña",
+      "cie_code": "G43"
+    }
+  }
+]
