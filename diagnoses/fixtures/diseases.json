@@ -1,0 +1,258 @@
+[
+  {
+    "model": "diagnoses.disease",
+    "pk": 1,
+    "fields": {
+      "name": "Resfriado Común",
+      "cie_code": "J00"
+    }
+  },
+  {
+    "model": "diagnoses.disease",
+    "pk": 2,
+    "fields": {
+      "name": "Neumonía No Grave",
+      "cie_code": "J18"
+    }
+  },
+  {
+    "model": "diagnoses.disease",
+    "pk": 3,
+    "fields": {
+      "name": "Faringoamigdalitis",
+      "cie_code": "J02"
+    }
+  },
+  {
+    "model": "diagnoses.disease",
+    "pk": 4,
+    "fields": {
+      "name": "Bronquitis Aguda",
+      "cie_code": "J20"
+    }
+  },
+  {
+    "model": "diagnoses.disease",
+    "pk": 5,
+    "fields": {
+      "name": "Influenza",
+      "cie_code": "J10"
+    }
+  },
+  {
+    "model": "diagnoses.disease",
+    "pk": 6,
+    "fields": {
+      "name": "Sinusitis Aguda",
+      "cie_code": "J01"
+    }
+  },
+  {
+    "model": "diagnoses.disease",
+    "pk": 7,
+    "fields": {
+      "name": "Laringitis Aguda",
+      "cie_code": "J04"
+    }
+  },
+  {
+    "model": "diagnoses.disease",
+    "pk": 8,
+    "fields": {
+      "name": "Diarrea y Gastroenteritis de Origen Infeccioso",
+      "cie_code": "A09"
+    }
+  },
+  {
+    "model": "diagnoses.disease",
+    "pk": 9,
+    "fields": {
+      "name": "Enfermedad por Reflujo Gastroesofágico",
+      "cie_code": "K21"
+    }
+  },
+  {
+    "model": "diagnoses.disease",
+    "pk": 10,
+    "fields": {
+      "name": "Gastritis y Duodenitis",
+      "cie_code": "K29"
+    }
+  },
+  {
+    "model": "diagnoses.disease",
+    "pk": 11,
+    "fields": {
+      "name": "Cólico Biliar Simple",
+      "cie_code": "K81.0"
+    }
+  },
+  {
+    "model": "diagnoses.disease",
+    "pk": 12,
+    "fields": {
+      "name": "Amebiasis",
+      "cie_code": "A06"
+    }
+  },
+  {
+    "model": "diagnoses.disease",
+    "pk": 13,
+    "fields": {
+      "name": "Giardiasis",
+      "cie_code": "A07.1"
+    }
+  },
+  {
+    "model": "diagnoses.disease",
+    "pk": 14,
+    "fields": {
+      "name": "Malaria",
+      "cie_code": "B50-B54"
+    }
+  },
+  {
+    "model": "diagnoses.disease",
+    "pk": 15,
+    "fields": {
+      "name": "Enfermedad de Chagas",
+      "cie_code": "B57"
+    }
+  },
+  {
+    "model": "diagnoses.disease",
+    "pk": 16,
+    "fields": {
+      "name": "Leishmaniasis Cutánea",
+      "cie_code": "B55.1"
+    }
+  },
+  {
+    "model": "diagnoses.disease",
+    "pk": 17,
+    "fields": {
+      "name": "Sífilis Congénita",
+      "cie_code": "A50"
+    }
+  },
+  {
+    "model": "diagnoses.disease",
+    "pk": 18,
+    "fields": {
+      "name": "Gonorrea",
+      "cie_code": "A54"
+    }
+  },
+  {
+    "model": "diagnoses.disease",
+    "pk": 19,
+    "fields": {
+      "name": "Tuberculosis Pulmonar",
+      "cie_code": "A15"
+    }
+  },
+  {
+    "model": "diagnoses.disease",
+    "pk": 20,
+    "fields": {
+      "name": "Migraña",
+      "cie_code": "G43"
+    }
+  },
+  {
+    "model": "diagnoses.disease",
+    "pk": 21,
+    "fields": {
+      "name": "Epilepsia",
+      "cie_code": "G40"
+    }
+  },
+  {
+    "model": "diagnoses.disease",
+    "pk": 22,
+    "fields": {
+      "name": "Cefalea",
+      "cie_code": "R51"
+    }
+  },
+  {
+    "model": "diagnoses.disease",
+    "pk": 23,
+    "fields": {
+      "name": "Crisis Epilépticas",
+      "cie_code": "G41"
+    }
+  },
+  {
+    "model": "diagnoses.disease",
+    "pk": 24,
+    "fields": {
+      "name": "Cistitis (Infección Urinaria Baja)",
+      "cie_code": "N30.0"
+    }
+  },
+  {
+    "model": "diagnoses.disease",
+    "pk": 25,
+    "fields": {
+      "name": "Infección Aguda de Riñón (Pielonefritis)",
+      "cie_code": "N10"
+    }
+  },
+  {
+    "model": "diagnoses.disease",
+    "pk": 26,
+    "fields": {
+      "name": "Impétigo",
+      "cie_code": "L01"
+    }
+  },
+  {
+    "model": "diagnoses.disease",
+    "pk": 27,
+    "fields": {
+      "name": "Dermatitis de Contacto",
+      "cie_code": "L23"
+    }
+  },
+  {
+    "model": "diagnoses.disease",
+    "pk": 28,
+    "fields": {
+      "name": "Urticaria",
+      "cie_code": "L50"
+    }
+  },
+  {
+    "model": "diagnoses.disease",
+    "pk": 29,
+    "fields": {
+      "name": "Acne",
+      "cie_code": "L70"
+    }
+  },
+  {
+    "model": "diagnoses.disease",
+    "pk": 30,
+    "fields": {
+      "name": "Hipertensión Primaria",
+      "cie_code": "I10"
+    }
+  },
+  {
+    "model": "diagnoses.disease",
+    "pk": 31,
+    "fields": {
+      "name": "Varices",
+      "cie_code": "I83"
+    }
+  },
+  {
+    "model": "diagnoses.disease",
+    "pk": 32,
+    "fields": {
+      "name": "Hemorroides",
+      "cie_code": "I84"
+    }
+  }
+]

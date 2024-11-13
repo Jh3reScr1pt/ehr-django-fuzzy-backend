@@ -23,12 +23,23 @@ class DiagnosesListCreateView(generics.ListCreateAPIView):
         # Crear diagnóstico sin grupos de enfermedades por ahora
         diagnosis = Diagnosis.objects.create(vital_signs=vital_signs)
 
-        # Añadir síntomas con intensidad
+        # Inicializar intensidades de síntomas
         symptom_intensities = {}
+
+        # Obtener todos los síntomas de la base de datos
+        all_symptoms = Symptom.objects.all()
+
+        # Establecer intensidad de 0 para todos los síntomas, si no están en la solicitud
+        for symptom in all_symptoms:
+            symptom_name_normalized = symptom.name.lower().replace(" ", "_")
+            symptom_intensities[symptom_name_normalized] = 0  # Intensidad por defecto
+
+        # Actualizar las intensidades para los síntomas presentes en la solicitud
         for symptom_data in symptoms_data:
             symptom = Symptom.objects.get(id=symptom_data['symptom_id'])
+            normalized_name = symptom.name.lower().replace(" ", "_")
             DiagnosisSymptom.objects.create(diagnosis=diagnosis, symptom=symptom, intensity=symptom_data['intensity'])
-            symptom_intensities[symptom.name.lower()] = symptom_data['intensity']  # Normalizamos a minúsculas
+            symptom_intensities[normalized_name] = symptom_data['intensity']  # Usar la intensidad proporcionada
 
         # Usar FuzzyDiseaseGroupDiagnosis para obtener probabilidades por grupo de enfermedades
         fuzzy_system = FuzzyDiseaseGroupDiagnosis()
@@ -38,7 +49,7 @@ class DiagnosesListCreateView(generics.ListCreateAPIView):
             'respiratory_rate': vital_signs_data['respiratory_rate'],
             'temperature': vital_signs_data['temperature'],
             'weight': vital_signs_data['weight'],
-            **symptom_intensities  # Agregar síntomas con intensidad
+            **symptom_intensities  # Agregar todos los síntomas con su intensidad
         }
         group_probabilities = fuzzy_system.diagnose(inputs)
 
@@ -53,7 +64,6 @@ class DiagnosesListCreateView(generics.ListCreateAPIView):
 
         serializer = DiagnosisSerializer(diagnosis)
         return Response(serializer.data, status=status.HTTP_201_CREATED)
-
 
 class DiagnosisDetailView(generics.RetrieveAPIView):
     queryset = Diagnosis.objects.all()

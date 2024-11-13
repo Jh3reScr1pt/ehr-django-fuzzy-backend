@@ -1,0 +1,344 @@
+[
+  {
+    "model": "diagnoses.groupsymptom",
+    "pk": 1,
+    "fields": {
+      "disease_group": 1,
+      "symptom": 1,
+      "severity_level": 2
+    }
+  },
+  {
+    "model": "diagnoses.groupsymptom",
+    "pk": 2,
+    "fields": {
+      "disease_group": 1,
+      "symptom": 2,
+      "severity_level": 3
+    }
+  },
+  {
+    "model": "diagnoses.groupsymptom",
+    "pk": 3,
+    "fields": {
+      "disease_group": 1,
+      "symptom": 3,
+      "severity_level": 2
+    }
+  },
+  {
+    "model": "diagnoses.groupsymptom",
+    "pk": 4,
+    "fields": {
+      "disease_group": 1,
+      "symptom": 4,
+      "severity_level": 3
+    }
+  },
+  {
+    "model": "diagnoses.groupsymptom",
+    "pk": 5,
+    "fields": {
+      "disease_group": 1,
+      "symptom": 5,
+      "severity_level": 1
+    }
+  },
+  {
+    "model": "diagnoses.groupsymptom",
+    "pk": 6,
+    "fields": {
+      "disease_group": 1,
+      "symptom": 6,
+      "severity_level": 2
+    }
+  },
+  {
+    "model": "diagnoses.groupsymptom",
+    "pk": 7,
+    "fields": {
+      "disease_group": 2,
+      "symptom": 8,
+      "severity_level": 3
+    }
+  },
+  {
+    "model": "diagnoses.groupsymptom",
+    "pk": 8,
+    "fields": {
+      "disease_group": 2,
+      "symptom": 9,
+      "severity_level": 2
+    }
+  },
+  {
+    "model": "diagnoses.groupsymptom",
+    "pk": 9,
+    "fields": {
+      "disease_group": 2,
+      "symptom": 10,
+      "severity_level": 3
+    }
+  },
+  {
+    "model": "diagnoses.groupsymptom",
+    "pk": 10,
+    "fields": {
+      "disease_group": 2,
+      "symptom": 11,
+      "severity_level": 2
+    }
+  },
+  {
+    "model": "diagnoses.groupsymptom",
+    "pk": 11,
+    "fields": {
+      "disease_group": 3,
+      "symptom": 4,
+      "severity_level": 3
+    }
+  },
+  {
+    "model": "diagnoses.groupsymptom",
+    "pk": 12,
+    "fields": {
+      "disease_group": 3,
+      "symptom": 12,
+      "severity_level": 2
+    }
+  },
+  {
+    "model": "diagnoses.groupsymptom",
+    "pk": 13,
+    "fields": {
+      "disease_group": 3,
+      "symptom": 13,
+      "severity_level": 3
+    }
+  },
+  {
+    "model": "diagnoses.groupsymptom",
+    "pk": 14,
+    "fields": {
+      "disease_group": 3,
+      "symptom": 16,
+      "severity_level": 2
+    }
+  },
+  {
+    "model": "diagnoses.groupsymptom",
+    "pk": 15,
+    "fields": {
+      "disease_group": 4,
+      "symptom": 5,
+      "severity_level": 3
+    }
+  },
+  {
+    "model": "diagnoses.groupsymptom",
+    "pk": 16,
+    "fields": {
+      "disease_group": 4,
+      "symptom": 16,
+      "severity_level": 2
+    }
+  },
+  {
+    "model": "diagnoses.groupsymptom",
+    "pk": 17,
+    "fields": {
+      "disease_group": 5,
+      "symptom": 20,
+      "severity_level": 3
+    }
+  },
+  {
+    "model": "diagnoses.groupsymptom",
+    "pk": 18,
+    "fields": {
+      "disease_group": 5,
+      "symptom": 14,
+      "severity_level": 1
+    }
+  },
+  {
+    "model": "diagnoses.groupsymptom",
+    "pk": 19,
+    "fields": {
+      "disease_group": 6,
+      "symptom": 12,
+      "severity_level": 2
+    }
+  },
+  {
+    "model": "diagnoses.groupsymptom",
+    "pk": 20,
+    "fields": {
+      "disease_group": 6,
+      "symptom": 13,
+      "severity_level": 2
+    }
+  },
+  {
+    "model": "diagnoses.groupsymptom",
+    "pk": 21,
+    "fields": {
+      "disease_group": 6,
+      "symptom": 15,
+      "severity_level": 1
+    }
+  },
+  {
+    "model": "diagnoses.groupsymptom",
+    "pk": 22,
+    "fields": {
+      "disease_group": 7,
+      "symptom": 16,
+      "severity_level": 1
+    }
+  },
+  {
+    "model": "diagnoses.groupsymptom",
+    "pk": 23,
+    "fields": {
+      "disease_group": 7,
+      "symptom": 18,
+      "severity_level": 2
+    }
+  },
+  {
+    "model": "diagnoses.groupsymptom",
+    "pk": 24,
+    "fields": {
+      "disease_group": 1,
+      "symptom": 6,
+      "severity_level": 1
+    }
+  },
+  {
+    "model": "diagnoses.groupsymptom",
+    "pk": 25,
+    "fields": {
+      "disease_group": 1,
+      "symptom": 7,
+      "severity_level": 2
+    }
+  },
+  {
+    "model": "diagnoses.groupsymptom",
+    "pk": 26,
+    "fields": {
+      "disease_group": 2,
+      "symptom": 9,
+      "severity_level": 3
+    }
+  },
+  {
+    "model": "diagnoses.groupsymptom",
+    "pk": 27,
+    "fields": {
+      "disease_group": 2,
+      "symptom": 10,
+      "severity_level": 1
+    }
+  },
+  {
+    "model": "diagnoses.groupsymptom",
+    "pk": 28,
+    "fields": {
+      "disease_group": 2,
+      "symptom": 11,
+      "severity_level": 2
+    }
+  },
+  {
+    "model": "diagnoses.groupsymptom",
+    "pk": 29,
+    "fields": {
+      "disease_group": 3,
+      "symptom": 4,
+      "severity_level": 3
+    }
+  },
+  {
+    "model": "diagnoses.groupsymptom",
+    "pk": 30,
+    "fields": {
+      "disease_group": 3,
+      "symptom": 8,
+      "severity_level": 1
+    }
+  },
+  {
+    "model": "diagnoses.groupsymptom",
+    "pk": 31,
+    "fields": {
+      "disease_group": 3,
+      "symptom": 13,
+      "severity_level": 2
+    }
+  },
+  {
+    "model": "diagnoses.groupsymptom",
+    "pk": 32,
+    "fields": {
+      "disease_group": 4,
+      "symptom": 5,
+      "severity_level": 1
+    }
+  },
+  {
+    "model": "diagnoses.groupsymptom",
+    "pk": 33,
+    "fields": {
+      "disease_group": 4,
+      "symptom": 16,
+      "severity_level": 3
+    }
+  },
+  {
+    "model": "diagnoses.groupsymptom",
+    "pk": 34,
+    "fields": {
+      "disease_group": 5,
+      "symptom": 14,
+      "severity_level": 1
+    }
+  },
+  {
+    "model": "diagnoses.groupsymptom",
+    "pk": 35,
+    "fields": {
+      "disease_group": 5,
+      "symptom": 17,
+      "severity_level": 3
+    }
+  },
+  {
+    "model": "diagnoses.groupsymptom",
+    "pk": 36,
+    "fields": {
+      "disease_group": 6,
+      "symptom": 12,
+      "severity_level": 2
+    }
+  },
+  {
+    "model": "diagnoses.groupsymptom",
+    "pk": 37,
+    "fields": {
+      "disease_group": 6,
+      "symptom": 15,
+      "severity_level": 1
+    }
+  },
+  {
+    "model": "diagnoses.groupsymptom",
+    "pk": 38,
+    "fields": {
+      "disease_group": 7,
+      "symptom": 18,
+      "severity_level": 3
+    }
+  }
+]

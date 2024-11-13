@@ -1,0 +1,142 @@
+[
+  {
+    "model": "diagnoses.symptom",
+    "pk": 1,
+    "fields": {
+      "name": "Congestión nasal"
+    }
+  },
+  {
+    "model": "diagnoses.symptom",
+    "pk": 2,
+    "fields": {
+      "name": "Dolor de garganta"
+    }
+  },
+  {
+    "model": "diagnoses.symptom",
+    "pk": 3,
+    "fields": {
+      "name": "Estornudos"
+    }
+  },
+  {
+    "model": "diagnoses.symptom",
+    "pk": 4,
+    "fields": {
+      "name": "Fiebre"
+    }
+  },
+  {
+    "model": "diagnoses.symptom",
+    "pk": 5,
+    "fields": {
+      "name": "Dolor de cabeza"
+    }
+  },
+  {
+    "model": "diagnoses.symptom",
+    "pk": 6,
+    "fields": {
+      "name": "Tos"
+    }
+  },
+  {
+    "model": "diagnoses.symptom",
+    "pk": 7,
+    "fields": {
+      "name": "Dificultad para respirar"
+    }
+  },
+  {
+    "model": "diagnoses.symptom",
+    "pk": 8,
+    "fields": {
+      "name": "Náuseas"
+    }
+  },
+  {
+    "model": "diagnoses.symptom",
+    "pk": 9,
+    "fields": {
+      "name": "Vómitos"
+    }
+  },
+  {
+    "model": "diagnoses.symptom",
+    "pk": 10,
+    "fields": {
+      "name": "Dolor abdominal"
+    }
+  },
+  {
+    "model": "diagnoses.symptom",
+    "pk": 11,
+    "fields": {
+      "name": "Diarrea"
+    }
+  },
+  {
+    "model": "diagnoses.symptom",
+    "pk": 12,
+    "fields": {
+      "name": "Erupciones cutáneas"
+    }
+  },
+  {
+    "model": "diagnoses.symptom",
+    "pk": 13,
+    "fields": {
+      "name": "Picazón"
+    }
+  },
+  {
+    "model": "diagnoses.symptom",
+    "pk": 14,
+    "fields": {
+      "name": "Fatiga"
+    }
+  },
+  {
+    "model": "diagnoses.symptom",
+    "pk": 15,
+    "fields": {
+      "name": "Pérdida de apetito"
+    }
+  },
+  {
+    "model": "diagnoses.symptom",
+    "pk": 16,
+    "fields": {
+      "name": "Mareos"
+    }
+  },
+  {
+    "model": "diagnoses.symptom",
+    "pk": 17,
+    "fields": {
+      "name": "Escalofríos"
+    }
+  },
+  {
+    "model": "diagnoses.symptom",
+    "pk": 18,
+    "fields": {
+      "name": "Dolor muscular"
+    }
+  },
+  {
+    "model": "diagnoses.symptom",
+    "pk": 19,
+    "fields": {
+      "name": "Dolor en las articulaciones"
+    }
+  },
+  {
+    "model": "diagnoses.symptom",
+    "pk": 20,
+    "fields": {
+      "name": "Dolor al orinar"
+    }
+  }
+]

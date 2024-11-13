@@ -37,6 +37,18 @@ class FuzzyDiseaseGroupDiagnosis:
         self.variables['temperature']['normal'] = fuzz.trimf(self.variables['temperature'].universe, [36, 37, 37.5])
         self.variables['temperature']['high'] = fuzz.trimf(self.variables['temperature'].universe, [37, 40, 40])
 
+        # Definir variable para frecuencia respiratoria (respiratory_rate)
+        self.variables['respiratory_rate'] = ctrl.Antecedent(np.arange(10, 31, 1), 'respiratory_rate')
+        self.variables['respiratory_rate']['low'] = fuzz.trimf(self.variables['respiratory_rate'].universe, [10, 10, 16])
+        self.variables['respiratory_rate']['normal'] = fuzz.trimf(self.variables['respiratory_rate'].universe, [12, 16, 20])
+        self.variables['respiratory_rate']['high'] = fuzz.trimf(self.variables['respiratory_rate'].universe, [18, 30, 30])
+
+        # Definir variable para peso (weight)
+        self.variables['weight'] = ctrl.Antecedent(np.arange(30, 151, 1), 'weight')
+        self.variables['weight']['low'] = fuzz.trimf(self.variables['weight'].universe, [30, 30, 60])
+        self.variables['weight']['normal'] = fuzz.trimf(self.variables['weight'].universe, [50, 75, 100])
+        self.variables['weight']['high'] = fuzz.trimf(self.variables['weight'].universe, [90, 150, 150])
+
     def create_system_for_group(self, group):
         rules = []
 

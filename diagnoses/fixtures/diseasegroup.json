@@ -1,0 +1,51 @@
+[
+  {
+    "model": "diagnoses.diseasegroup",
+    "pk": 1,
+    "fields": {
+      "name": "Infecciones Respiratorias Agudas"
+    }
+  },
+  {
+    "model": "diagnoses.diseasegroup",
+    "pk": 2,
+    "fields": {
+      "name": "Enfermedades Gastrointestinales"
+    }
+  },
+  {
+    "model": "diagnoses.diseasegroup",
+    "pk": 3,
+    "fields": {
+      "name": "Enfermedades Infecciosas y Parasitarias"
+    }
+  },
+  {
+    "model": "diagnoses.diseasegroup",
+    "pk": 4,
+    "fields": {
+      "name": "Enfermedades del Sistema Nervioso"
+    }
+  },
+  {
+    "model": "diagnoses.diseasegroup",
+    "pk": 5,
+    "fields": {
+      "name": "Enfermedades del Sistema Urinario"
+    }
+  },
+  {
+    "model": "diagnoses.diseasegroup",
+    "pk": 6,
+    "fields": {
+      "name": "Enfermedades de la Piel y Tejido Subcutáneo"
+    }
+  },
+  {
+    "model": "diagnoses.diseasegroup",
+    "pk": 7,
+    "fields": {
+      "name": "Enfermedades del Sistema Circulatorio"
+    }
+  }
+]
