@@ -3,8 +3,10 @@ ENTORNO VIRTUAL
 -----------------------------------------------------------
 pip install virtualenv
 py -m venv venv
-Unix (bash): source venv/Scripts/activate
-Windows (cmd): venv\\Scripts\\activate
+Unix (bash): 
+    source venv/Scripts/activate
+Windows (cmd): 
+    venv\\Scripts\\activate
 -----------------------------------------------------------
 deactivate
 -----------------------------------------------------------

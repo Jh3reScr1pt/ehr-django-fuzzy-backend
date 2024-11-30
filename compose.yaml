@@ -1,0 +1,10 @@
+services:
+  server:
+    container_name: backend-django-v1           # Nombre del contenedor
+    image: jh3re404/backend-django-fuzzy-ehr-server:v1 # Nombre y tag de la imagen
+    build:
+      context: .                                # Ruta al directorio donde está el Dockerfile
+    environment:
+      DATABASE_URL: "file:./dev.db"  # SQLite URL
+    ports: 
+      - '8000:8000'

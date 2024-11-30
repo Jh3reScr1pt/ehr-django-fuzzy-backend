@@ -2,7 +2,7 @@ from rest_framework import generics
 from rest_framework.response import Response
 from rest_framework import status
 from .models import Diagnosis, VitalSigns, DiseaseGroup, Symptom, DiagnosisSymptom, DiagnosisGroupProbability
-from .serializers import DiagnosisSerializer, VitalSignsSerializer
+from .serializers import DiagnosisSerializer, VitalSignsSerializer, SymptomSerializer
 from .fuzzy_inference import FuzzyDiseaseGroupDiagnosis  # Cambiado para el nuevo sistema
 
 class DiagnosesListCreateView(generics.ListCreateAPIView):
@@ -68,3 +68,7 @@ class DiagnosesListCreateView(generics.ListCreateAPIView):
 class DiagnosisDetailView(generics.RetrieveAPIView):
     queryset = Diagnosis.objects.all()
     serializer_class = DiagnosisSerializer
+
+class SymptomListView(generics.ListAPIView):
+    queryset = Symptom.objects.all()
+    serializer_class = SymptomSerializer
