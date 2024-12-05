@@ -17,7 +17,7 @@ class FuzzyDiseaseGroupDiagnosis:
                 symptom_name = symptom.name.lower().replace(" ", "_")
                 self.variables[symptom_name] = ctrl.Antecedent(np.arange(0, 4, 1), symptom_name)  # Cambiado a rango de 0 a 3
                 self.variables[symptom_name]['low'] = fuzz.trimf(self.variables[symptom_name].universe, [0, 0, 1])
-                self.variables[symptom_name]['medium'] = fuzz.trimf(self.variables[symptom_name].universe, [1, 2, 3])
+                self.variables[symptom_name]['normal'] = fuzz.trimf(self.variables[symptom_name].universe, [1, 2, 3])
                 self.variables[symptom_name]['high'] = fuzz.trimf(self.variables[symptom_name].universe, [2, 3, 3])
 
         # Definir variables para signos vitales
@@ -50,14 +50,14 @@ class FuzzyDiseaseGroupDiagnosis:
         rules = []
         probability = ctrl.Consequent(np.arange(0, 101, 1), 'probability')
         probability['low'] = fuzz.trimf(probability.universe, [0, 0, 50])
-        probability['medium'] = fuzz.trimf(probability.universe, [25, 50, 75])
+        probability['normal'] = fuzz.trimf(probability.universe, [25, 50, 75])
         probability['high'] = fuzz.trimf(probability.universe, [50, 100, 100])
 
         # Reglas para el grupo "Infecciones Respiratorias Agudas"
         if group.name == "Infecciones Respiratorias Agudas":
             # Reglas para síntomas respiratorios y fiebre alta
             rules.append(ctrl.Rule(self.variables['congestión_nasal']['high'] & self.variables['fiebre']['high'], probability['high']))
-            rules.append(ctrl.Rule(self.variables['dolor_de_garganta']['high'] | self.variables['dolor_de_garganta']['medium'], probability['high']))
+            rules.append(ctrl.Rule(self.variables['dolor_de_garganta']['high'] | self.variables['dolor_de_garganta']['normal'], probability['high']))
             rules.append(ctrl.Rule(self.variables['estornudos']['high'] & self.variables['congestión_nasal']['high'], probability['high']))
             
             # Combinaciones de fiebre alta con otros síntomas respiratorios severos
@@ -85,50 +85,280 @@ class FuzzyDiseaseGroupDiagnosis:
 
         # Reglas para el grupo "Enfermedades Gastrointestinales"
         elif group.name == "Enfermedades Gastrointestinales":
+            # Combinaciones altas de síntomas clave
             rules.append(ctrl.Rule(self.variables['náuseas']['high'] & self.variables['vómitos']['high'], probability['high']))
             rules.append(ctrl.Rule(self.variables['diarrea']['high'] & self.variables['dolor_abdominal']['high'], probability['high']))
-            rules.append(ctrl.Rule(self.variables['náuseas']['medium'] | self.variables['vómitos']['medium'], probability['medium']))
-            rules.append(ctrl.Rule(self.variables['diarrea']['medium'] & self.variables['dolor_abdominal']['medium'], probability['medium']))
-            rules.append(ctrl.Rule(self.variables['fiebre']['high'] & ~(self.variables['náuseas']['high'] | self.variables['vómitos']['high']), probability['low']))
+            rules.append(ctrl.Rule(self.variables['náuseas']['high'] & self.variables['dolor_abdominal']['high'], probability['high']))
+            rules.append(ctrl.Rule(self.variables['vómitos']['high'] & self.variables['diarrea']['high'], probability['high']))
+
+            # Uso de signos vitales con síntomas clave
+            rules.append(ctrl.Rule(self.variables['diarrea']['high'] & self.variables['fiebre']['high'], probability['high']))
+            rules.append(ctrl.Rule(self.variables['náuseas']['high'] & self.variables['fiebre']['high'], probability['high']))
+            rules.append(ctrl.Rule(self.variables['vómitos']['high'] & self.variables['heart_rate']['high'], probability['high']))
+            rules.append(ctrl.Rule(self.variables['dolor_abdominal']['high'] & self.variables['blood_pressure']['low'], probability['high']))
+
+            # Combinaciones moderadas
+            rules.append(ctrl.Rule(self.variables['náuseas']['normal'] & self.variables['vómitos']['normal'], probability['normal']))
+            rules.append(ctrl.Rule(self.variables['diarrea']['normal'] & self.variables['dolor_abdominal']['normal'], probability['normal']))
+            rules.append(ctrl.Rule(self.variables['náuseas']['normal'] & self.variables['diarrea']['normal'], probability['normal']))
+            rules.append(ctrl.Rule(self.variables['dolor_abdominal']['normal'] & self.variables['heart_rate']['normal'], probability['normal']))
+
+            # Penalizaciones y probabilidades bajas
+            rules.append(ctrl.Rule(self.variables['fiebre']['low'] & self.variables['náuseas']['low'], probability['low']))
+            rules.append(ctrl.Rule(self.variables['diarrea']['low'] & self.variables['dolor_abdominal']['low'], probability['low']))
+            rules.append(ctrl.Rule(self.variables['náuseas']['low'] & self.variables['vómitos']['low'], probability['low']))
+            rules.append(ctrl.Rule(self.variables['blood_pressure']['low'] & self.variables['diarrea']['low'], probability['low']))
+
+            # Casos críticos: múltiples síntomas altos simultáneamente
+            rules.append(ctrl.Rule(
+                self.variables['náuseas']['high'] &
+                self.variables['vómitos']['high'] &
+                self.variables['diarrea']['high'] &
+                self.variables['dolor_abdominal']['high'],
+                probability['high']
+            ))
+
+            rules.append(ctrl.Rule(
+                self.variables['náuseas']['high'] &
+                self.variables['vómitos']['high'] &
+                self.variables['fiebre']['high'] &
+                self.variables['heart_rate']['high'],
+                probability['high']
+            ))
+
+            # Fiebre alta sin presencia de náuseas o vómitos (posible infección no gastrointestinal)
+            rules.append(ctrl.Rule(
+                self.variables['fiebre']['high'] & ~(self.variables['náuseas']['high'] | self.variables['vómitos']['high']),
+                probability['low']
+            ))
 
         # Reglas para el grupo "Enfermedades Infecciosas y Parasitarias"
         elif group.name == "Enfermedades Infecciosas y Parasitarias":
+            # Combinaciones altas de síntomas clave
             rules.append(ctrl.Rule(self.variables['fiebre']['high'] & self.variables['diarrea']['high'], probability['high']))
-            rules.append(ctrl.Rule(self.variables['heart_rate']['high'] & self.variables['fiebre']['high'], probability['high']))
-            rules.append(ctrl.Rule(self.variables['fiebre']['medium'] & self.variables['dolor_abdominal']['medium'], probability['medium']))
+            rules.append(ctrl.Rule(self.variables['fiebre']['high'] & self.variables['pérdida_de_apetito']['high'], probability['high']))
+            rules.append(ctrl.Rule(self.variables['fiebre']['high'] & self.variables['dolor_abdominal']['high'], probability['high']))
+            rules.append(ctrl.Rule(self.variables['diarrea']['high'] & self.variables['fatiga']['high'], probability['high']))
+            
+            # Uso de signos vitales con síntomas
+            rules.append(ctrl.Rule(self.variables['fiebre']['high'] & self.variables['heart_rate']['high'], probability['high']))
+            rules.append(ctrl.Rule(self.variables['fiebre']['high'] & self.variables['respiratory_rate']['high'], probability['high']))
+            rules.append(ctrl.Rule(self.variables['fiebre']['high'] & self.variables['temperature']['high'], probability['high']))
+            rules.append(ctrl.Rule(self.variables['diarrea']['high'] & self.variables['blood_pressure']['low'], probability['high']))
+
+            # Combinaciones moderadas
+            rules.append(ctrl.Rule(self.variables['dolor_abdominal']['normal'] & self.variables['diarrea']['normal'], probability['normal']))
+            rules.append(ctrl.Rule(self.variables['fiebre']['normal'] & self.variables['pérdida_de_apetito']['normal'], probability['normal']))
+            rules.append(ctrl.Rule(self.variables['náuseas']['normal'] & self.variables['vómitos']['normal'], probability['normal']))
+            rules.append(ctrl.Rule(self.variables['fatiga']['normal'] & self.variables['heart_rate']['normal'], probability['normal']))
+
+            # Combinaciones leves y penalizaciones
+            rules.append(ctrl.Rule(self.variables['diarrea']['low'] & self.variables['dolor_abdominal']['low'], probability['low']))
+            rules.append(ctrl.Rule(self.variables['fiebre']['low'] & self.variables['náuseas']['low'], probability['low']))
+            rules.append(ctrl.Rule(self.variables['pérdida_de_apetito']['low'] & self.variables['vómitos']['low'], probability['low']))
+            rules.append(ctrl.Rule(self.variables['temperature']['low'] & self.variables['fiebre']['low'], probability['low']))
+
+            # Casos críticos: múltiples síntomas altos simultáneamente
+            rules.append(ctrl.Rule(
+                self.variables['fiebre']['high'] &
+                self.variables['diarrea']['high'] &
+                self.variables['dolor_abdominal']['high'] &
+                self.variables['fatiga']['high'] &
+                self.variables['heart_rate']['high'],
+                probability['high']
+            ))
+
+            rules.append(ctrl.Rule(
+                self.variables['fiebre']['high'] &
+                self.variables['vómitos']['high'] &
+                self.variables['náuseas']['high'] &
+                self.variables['temperature']['high'],
+                probability['high']
+            ))
 
         # Reglas para el grupo "Enfermedades del Sistema Nervioso"
         elif group.name == "Enfermedades del Sistema Nervioso":
-            rules.append(ctrl.Rule(self.variables['dolor_de_cabeza']['medium'], probability['medium']))
-            # Frecuencia cardíaca alta combinada con dolor de cabeza severo (indicativo de hipertensión intracraneal)
+            # Combinaciones altas de síntomas clave
+            rules.append(ctrl.Rule(self.variables['dolor_de_cabeza']['high'] & self.variables['mareos']['high'], probability['high']))
+            rules.append(ctrl.Rule(self.variables['dolor_de_cabeza']['high'] & self.variables['fatiga']['high'], probability['high']))
+            rules.append(ctrl.Rule(self.variables['mareos']['high'] & self.variables['heart_rate']['high'], probability['high']))
+            rules.append(ctrl.Rule(self.variables['dolor_de_cabeza']['high'] & self.variables['blood_pressure']['high'], probability['high']))
+            rules.append(ctrl.Rule(self.variables['mareos']['high'] & self.variables['blood_pressure']['high'], probability['high']))
+
+            # Uso de signos vitales
             rules.append(ctrl.Rule(self.variables['heart_rate']['high'] & self.variables['dolor_de_cabeza']['high'], probability['high']))
-            # Presión arterial alta combinada con visión borrosa (indicativo de presión intracraneal elevada)
-            rules.append(ctrl.Rule(self.variables['blood_pressure']['high'] , probability['high']))
-            # Mareos severos junto con sensibilidad a la luz (posible migraña severa)
-            rules.append(ctrl.Rule(self.variables['mareos']['high'], probability['high']))
+            rules.append(ctrl.Rule(self.variables['blood_pressure']['high'] & self.variables['mareos']['high'], probability['high']))
+            rules.append(ctrl.Rule(self.variables['respiratory_rate']['high'] & self.variables['dolor_de_cabeza']['high'], probability['high']))
+            rules.append(ctrl.Rule(self.variables['temperature']['high'] & self.variables['dolor_de_cabeza']['high'], probability['high']))
+
+            # Combinaciones moderadas
+            rules.append(ctrl.Rule(self.variables['dolor_de_cabeza']['normal'] & self.variables['mareos']['normal'], probability['normal']))
+            rules.append(ctrl.Rule(self.variables['dolor_de_cabeza']['normal'] & self.variables['fatiga']['normal'], probability['normal']))
+            rules.append(ctrl.Rule(self.variables['blood_pressure']['normal'] & self.variables['mareos']['normal'], probability['normal']))
+            rules.append(ctrl.Rule(self.variables['heart_rate']['normal'] & self.variables['dolor_de_cabeza']['normal'], probability['normal']))
+
+            # Penalizaciones y probabilidades bajas
+            rules.append(ctrl.Rule(self.variables['dolor_de_cabeza']['low'] & self.variables['mareos']['low'], probability['low']))
+            rules.append(ctrl.Rule(self.variables['heart_rate']['low'] & self.variables['dolor_de_cabeza']['low'], probability['low']))
+            rules.append(ctrl.Rule(self.variables['blood_pressure']['low'] & self.variables['mareos']['low'], probability['low']))
+            rules.append(ctrl.Rule(self.variables['temperature']['low'] & self.variables['dolor_de_cabeza']['low'], probability['low']))
+
+            # Casos críticos: múltiples síntomas altos simultáneamente
+            rules.append(ctrl.Rule(
+                self.variables['dolor_de_cabeza']['high'] &
+                self.variables['mareos']['high'] &
+                self.variables['heart_rate']['high'] &
+                self.variables['blood_pressure']['high'],
+                probability['high']
+            ))
+
+            rules.append(ctrl.Rule(
+                self.variables['dolor_de_cabeza']['high'] &
+                self.variables['fatiga']['high'] &
+                self.variables['temperature']['high'] &
+                self.variables['respiratory_rate']['high'],
+                probability['high']
+            ))
+
 
         # Reglas para el grupo "Enfermedades del Sistema Urinario"
         elif group.name == "Enfermedades del Sistema Urinario":
-            rules.append(ctrl.Rule(self.variables['dolor_al_orinar']['high'] & self.variables['fiebre']['medium'], probability['high']))
+            # Combinaciones altas de síntomas clave
+            rules.append(ctrl.Rule(self.variables['dolor_al_orinar']['high'] & self.variables['fiebre']['high'], probability['high']))
+            rules.append(ctrl.Rule(self.variables['dolor_al_orinar']['high'] & self.variables['dolor_abdominal']['high'], probability['high']))
+            rules.append(ctrl.Rule(self.variables['dolor_al_orinar']['high'] & self.variables['fatiga']['high'], probability['high']))
+            rules.append(ctrl.Rule(self.variables['fiebre']['high'] & self.variables['dolor_abdominal']['high'], probability['high']))
+
+            # Uso de signos vitales con síntomas clave
+            rules.append(ctrl.Rule(self.variables['dolor_al_orinar']['high'] & self.variables['blood_pressure']['low'], probability['high']))
+            rules.append(ctrl.Rule(self.variables['dolor_al_orinar']['high'] & self.variables['heart_rate']['high'], probability['high']))
+            rules.append(ctrl.Rule(self.variables['fiebre']['normal'] & self.variables['blood_pressure']['low'], probability['normal']))
+            rules.append(ctrl.Rule(self.variables['fiebre']['high'] & self.variables['respiratory_rate']['high'], probability['high']))
+
+            # Combinaciones moderadas
+            rules.append(ctrl.Rule(self.variables['dolor_al_orinar']['normal'] & self.variables['fiebre']['normal'], probability['normal']))
+            rules.append(ctrl.Rule(self.variables['dolor_al_orinar']['normal'] & self.variables['dolor_abdominal']['normal'], probability['normal']))
+            rules.append(ctrl.Rule(self.variables['blood_pressure']['normal'] & self.variables['fiebre']['normal'], probability['normal']))
+            rules.append(ctrl.Rule(self.variables['dolor_al_orinar']['normal'] & self.variables['fatiga']['normal'], probability['normal']))
+
+            # Penalizaciones y probabilidades bajas
+            rules.append(ctrl.Rule(self.variables['dolor_al_orinar']['low'] & self.variables['fiebre']['low'], probability['low']))
+            rules.append(ctrl.Rule(self.variables['blood_pressure']['low'] & self.variables['fiebre']['low'], probability['low']))
+            rules.append(ctrl.Rule(self.variables['heart_rate']['low'] & self.variables['dolor_abdominal']['low'], probability['low']))
             rules.append(ctrl.Rule(self.variables['fiebre']['low'], probability['low']))
-            rules.append(ctrl.Rule(self.variables['fiebre']['high'] & self.variables['dolor_al_orinar']['high'], probability['high']))
-            # Presión arterial baja combinada con fiebre moderada (posible complicación de infección urinaria severa)
-            rules.append(ctrl.Rule(self.variables['blood_pressure']['low'] & self.variables['fiebre']['medium'], probability['medium']))
+
+            # Casos críticos: múltiples síntomas altos simultáneamente
+            rules.append(ctrl.Rule(
+                self.variables['dolor_al_orinar']['high'] &
+                self.variables['fiebre']['high'] &
+                self.variables['dolor_abdominal']['high'] &
+                self.variables['blood_pressure']['low'],
+                probability['high']
+            ))
+
+            rules.append(ctrl.Rule(
+                self.variables['dolor_al_orinar']['high'] &
+                self.variables['fiebre']['high'] &
+                self.variables['heart_rate']['high'] &
+                self.variables['respiratory_rate']['high'],
+                probability['high']
+            ))
 
         # Reglas para el grupo "Enfermedades de la Piel y Tejido Subcutáneo"
         elif group.name == "Enfermedades de la Piel y Tejido Subcutáneo":
-            rules.append(ctrl.Rule(self.variables['picazón']['high'], probability['high']))
-            # Comezón severa junto con enrojecimiento moderado (posible dermatitis)
-            rules.append(ctrl.Rule(self.variables['picazón']['high'], probability['medium']))
+            # Combinaciones altas de síntomas clave
+            rules.append(ctrl.Rule(self.variables['picazón']['high'] & self.variables['dolor_abdominal']['low'], probability['high']))
+            rules.append(ctrl.Rule(self.variables['picazón']['high'] & self.variables['erupciones_cutáneas']['high'], probability['high']))
+            rules.append(ctrl.Rule(self.variables['picazón']['high'] & self.variables['fatiga']['high'], probability['high']))
+            rules.append(ctrl.Rule(self.variables['picazón']['high'] & self.variables['fiebre']['normal'], probability['normal']))
+
+            # Uso de signos vitales con síntomas clave
+            rules.append(ctrl.Rule(self.variables['picazón']['high'] & self.variables['fiebre']['high'], probability['high']))
+            rules.append(ctrl.Rule(self.variables['picazón']['high'] & self.variables['heart_rate']['high'], probability['high']))
+            rules.append(ctrl.Rule(self.variables['erupciones_cutáneas']['high'] & self.variables['temperature']['high'], probability['high']))
+            rules.append(ctrl.Rule(self.variables['picazón']['high'] & self.variables['respiratory_rate']['high'], probability['normal']))
+
+            # Combinaciones moderadas
+            rules.append(ctrl.Rule(self.variables['picazón']['normal'] & self.variables['erupciones_cutáneas']['normal'], probability['normal']))
+            rules.append(ctrl.Rule(self.variables['picazón']['normal'] & self.variables['fatiga']['normal'], probability['normal']))
+            rules.append(ctrl.Rule(self.variables['fiebre']['normal'] & self.variables['erupciones_cutáneas']['normal'], probability['normal']))
+            rules.append(ctrl.Rule(self.variables['picazón']['normal'] & self.variables['heart_rate']['normal'], probability['normal']))
+
+            # Penalizaciones y probabilidades bajas
+            rules.append(ctrl.Rule(self.variables['picazón']['low'] & self.variables['erupciones_cutáneas']['low'], probability['low']))
+            rules.append(ctrl.Rule(self.variables['picazón']['low'] & self.variables['fatiga']['low'], probability['low']))
+            rules.append(ctrl.Rule(self.variables['heart_rate']['low'] & self.variables['picazón']['low'], probability['low']))
+            rules.append(ctrl.Rule(self.variables['fiebre']['low'] & self.variables['erupciones_cutáneas']['low'], probability['low']))
+
+            # Casos críticos: múltiples síntomas altos simultáneamente
+            rules.append(ctrl.Rule(
+                self.variables['picazón']['high'] &
+                self.variables['erupciones_cutáneas']['high'] &
+                self.variables['fiebre']['high'] &
+                self.variables['heart_rate']['high'],
+                probability['high']
+            ))
+
+            rules.append(ctrl.Rule(
+                self.variables['picazón']['high'] &
+                self.variables['fatiga']['high'] &
+                self.variables['temperature']['high'] &
+                self.variables['erupciones_cutáneas']['high'],
+                probability['high']
+            ))
+
 
         # Reglas para el grupo "Enfermedades del Sistema Circulatorio"
         elif group.name == "Enfermedades del Sistema Circulatorio":
-            rules.append(ctrl.Rule(self.variables['mareos']['high'] , probability['high']))
-            rules.append(ctrl.Rule(self.variables['fatiga']['medium'] & self.variables['dolor_de_cabeza']['medium'], probability['medium']))
-            # Presión arterial alta combinada con mareos severos (posible hipertensión)
-            rules.append(ctrl.Rule(self.variables['blood_pressure']['high'] & self.variables['mareos']['high'], probability['high']))
-            # Fatiga severa junto con hinchazón de piernas (posible insuficiencia venosa)
-            rules.append(ctrl.Rule(self.variables['fatiga']['high'], probability['high']))
+            # Combinaciones altas de síntomas clave
+            rules.append(ctrl.Rule(self.variables['mareos']['high'] & self.variables['fatiga']['high'], probability['high']))
+            rules.append(ctrl.Rule(self.variables['dolor_de_cabeza']['high'] & self.variables['mareos']['high'], probability['high']))
+            rules.append(ctrl.Rule(self.variables['fatiga']['high'] & self.variables['dolor_de_cabeza']['high'], probability['high']))
+            rules.append(ctrl.Rule(self.variables['blood_pressure']['high'] & self.variables['fatiga']['high'], probability['high']))
+
+            # Uso de signos vitales con síntomas clave
+            rules.append(ctrl.Rule(self.variables['mareos']['high'] & self.variables['blood_pressure']['high'], probability['high']))
+            rules.append(ctrl.Rule(self.variables['dolor_de_cabeza']['high'] & self.variables['heart_rate']['high'], probability['high']))
+            rules.append(ctrl.Rule(self.variables['fatiga']['high'] & self.variables['heart_rate']['high'], probability['high']))
+            rules.append(ctrl.Rule(self.variables['blood_pressure']['high'] & self.variables['heart_rate']['high'], probability['high']))
+
+            # Combinaciones moderadas
+            rules.append(ctrl.Rule(self.variables['mareos']['normal'] & self.variables['dolor_de_cabeza']['normal'], probability['normal']))
+            rules.append(ctrl.Rule(self.variables['fatiga']['normal'] & self.variables['blood_pressure']['normal'], probability['normal']))
+            rules.append(ctrl.Rule(self.variables['mareos']['normal'] & self.variables['heart_rate']['normal'], probability['normal']))
+            rules.append(ctrl.Rule(self.variables['dolor_de_cabeza']['normal'] & self.variables['heart_rate']['normal'], probability['normal']))
+
+            # Penalizaciones y probabilidades bajas
+            rules.append(ctrl.Rule(self.variables['mareos']['low'] & self.variables['fatiga']['low'], probability['low']))
+            rules.append(ctrl.Rule(self.variables['blood_pressure']['low'] & self.variables['dolor_de_cabeza']['low'], probability['low']))
+            rules.append(ctrl.Rule(self.variables['heart_rate']['low'] & self.variables['mareos']['low'], probability['low']))
+            rules.append(ctrl.Rule(self.variables['fatiga']['low'] & self.variables['heart_rate']['low'], probability['low']))
+
+            # Casos críticos: múltiples síntomas altos simultáneamente
+            rules.append(ctrl.Rule(
+                self.variables['mareos']['high'] &
+                self.variables['fatiga']['high'] &
+                self.variables['blood_pressure']['high'] &
+                self.variables['heart_rate']['high'],
+                probability['high']
+            ))
+
+            rules.append(ctrl.Rule(
+                self.variables['dolor_de_cabeza']['high'] &
+                self.variables['mareos']['high'] &
+                self.variables['blood_pressure']['high'] &
+                self.variables['heart_rate']['high'],
+                probability['high']
+            ))
+
+            # Consideración para niveles intermedios
+            rules.append(ctrl.Rule(
+                self.variables['blood_pressure']['normal'] & 
+                self.variables['fatiga']['normal'] & 
+                self.variables['mareos']['normal'],
+                probability['normal']
+            ))
+
 
         # Crear el sistema de control para el grupo
         system_ctrl = ctrl.ControlSystem(rules)
@@ -160,4 +390,9 @@ class FuzzyDiseaseGroupDiagnosis:
                     'probability': probability
                 })
 
-        return results
+        # Ordenar los resultados por probabilidad de diagnóstico en orden descendente
+        results = sorted(results, key=lambda x: x['probability'], reverse=True)
+
+        # Devolver solo los 3 grupos de enfermedades con mayor probabilidad
+        return results[:3]
+

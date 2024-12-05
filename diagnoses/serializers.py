@@ -14,7 +14,7 @@ class VitalSignsSerializer(serializers.ModelSerializer):
 class DiseaseSerializer(serializers.ModelSerializer):
     class Meta:
         model = Disease
-        fields = '__all__'
+        fields = ['name', 'cie_code'] 
 
 class DiseaseGroupSerializer(serializers.ModelSerializer):
     cie_codes = DiseaseSerializer(many=True, read_only=True)
